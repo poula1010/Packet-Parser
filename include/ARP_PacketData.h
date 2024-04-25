@@ -1,5 +1,5 @@
 #include <array>
-#include<vector>
+#include <vector>
 #pragma once
 using std::array;
 using std::vector;

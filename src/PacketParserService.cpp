@@ -1,23 +1,27 @@
-#include "PacketParserService.h"
-#include "customExceptions.h"
+#include "../include/PacketParserService.h"
+#include "../include/customExceptions.h"
 PacketParserService::PacketParserService(){};
 
 std::string PacketParserService::parsePacket(string input)
 {
     std::string output{""};
-    try {
+    try
+    {
         Packet *packet = packetFactory.createPacket(input);
         output = packet->display();
         delete packet;
     }
-    catch(MinPacketLengthNotReachedException e){
+    catch (MinPacketLengthNotReachedException e)
+    {
         output = e.what();
     }
-    catch(MaxPacketLengthExceededException e){
+    catch (MaxPacketLengthExceededException e)
+    {
         output = e.what();
     }
-    catch (...) {
-        output="*invalid input";
+    catch (...)
+    {
+        output = "*invalid input";
     }
 
     return output;

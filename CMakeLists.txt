@@ -13,30 +13,8 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
-        main.cpp
-        packetparser.cpp
-        packetparser.h
-        packetparser.ui
-        PacketFactory.h
-        PacketFactory.cpp
-        PacketDataExtractor.h
-        PacketDataExtractor.cpp
-        Packet.h
-        Packet.cpp
-        OtherPacket.h
-        OtherPacket.cpp
-        IP_PacketData.h
-        IP_Packet.h
-        IP_Packet.cpp
-        ICMP_Packet.h
-        ICMP_PacketData.h
-        ICMP_Packet.cpp
-        BasePacketData.h
-        ARP_Packet.cpp
-        ARP_Packet.h
-        ARP_PacketData.h
-        PacketParserService.h
-        PacketParserService.cpp
+        cpp/main.cpp
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
