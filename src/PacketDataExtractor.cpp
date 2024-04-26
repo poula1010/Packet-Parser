@@ -1,4 +1,3 @@
-#include <regex>
 #include "PacketDataExtractor.h"
 #include "customExceptions.h"
 using namespace std;
@@ -135,6 +134,7 @@ ARP_PacketData *PacketDataExtractor::extractARP_PacketData(vector<unsigned char>
         targetProtocolAddress};
     return arpPacketData;
 }
+
 // function for extracting IP_Packet details from basePacket payload
 IP_PacketData *PacketDataExtractor::extractIP_PacketData(vector<unsigned char> basePayLoad)
 {
@@ -179,11 +179,26 @@ IP_PacketData *PacketDataExtractor::extractIP_PacketData(vector<unsigned char> b
     array<unsigned char, 2> headerCheckSum{extractArray<unsigned char, 2>(basePayLoadItr)};
 
     // assigning sourceAddress
-    array<unsigned char, 4> sourceIp{extractArray<unsigned char, 4>(basePayLoadItr)};
+    vector<unsigned char> sourceIp{};
+    if(ipVersion == 6){
+        array<unsigned char,6> arr = extractArray<unsigned char, 6>(basePayLoadItr);
+        sourceIp.insert(sourceIp.cbegin(),arr.begin(),arr.end());
+    }
+    else{
+        array<unsigned char,4> arr = extractArray<unsigned char, 4>(basePayLoadItr);
+        sourceIp.insert(sourceIp.cbegin(),arr.begin(),arr.end());
+    }
 
     // assigning destinationAddress
-    array<unsigned char, 4> destinationIp{extractArray<unsigned char, 4>(basePayLoadItr)};
-
+    vector<unsigned char> destinationIp{};
+    if(ipVersion == 6){
+        array<unsigned char,6> arr = extractArray<unsigned char, 6>(basePayLoadItr);
+        destinationIp.insert(destinationIp.cbegin(),arr.begin(),arr.end());
+    }
+    else{
+        array<unsigned char,4> arr = extractArray<unsigned char, 4>(basePayLoadItr);
+        destinationIp.insert(destinationIp.cbegin(),arr.begin(),arr.end());
+    }
     // reaching this point we have extracted 20 bytes exactly that must be contained in every IP Header in the following we extract the options using IHL
     vector<unsigned char> options(internetHeaderLength - 20);
     for (int i = 0; i < internetHeaderLength - 20; i++)
