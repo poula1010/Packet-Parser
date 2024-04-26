@@ -1,7 +1,8 @@
-#include "../include/IP_Packet.h"
+#include "IP_Packet.h"
 std::string IP_Packet::display()
 {
-    std::string output{"Packet Type : IP \n"};
+    std::string output{""};
+    output = ip_PacketData->protocol != 0x01 ? string{"Packet Type : IP \n"} : string{"Packet Type : ICMP \n"};
     output += Packet::display();
     output += ip_PacketData->ipVersion == 4   ? "IPv4 PayLoad: \n"
               : ip_PacketData->ipVersion == 6 ? "IPv6 PayLoad: \n"
